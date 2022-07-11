@@ -1,28 +1,49 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div v-if="wellcome">
+      <WellcomeView />
+    </div>
+    <div v-if="!wellcome">
+        <Sidebar/>
+        <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import WellcomeView from './components/WellcomeView.vue';
+import Dashboard from './components/Dashboard.vue';
+import VueSidebarMenuAkahon from "vue-sidebar-menu-akahon";
+import Sidebar from './components/Sidebar.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    WellcomeView,
+    Dashboard,
+    VueSidebarMenuAkahon,
+    Sidebar
+},
+  data(){
+    return{
+      wellcome : true,
+      
+    }
+  },
+  created(){
+    setTimeout(() => {
+      this.wellcome = false
+    }, 5000);
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+html,body{
+    background-color: #334155;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 </style>
