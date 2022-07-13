@@ -3,7 +3,11 @@
 import { app, protocol, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
+import { ipcMain } from "electron";
+import path from 'path'
 const isDevelopment = process.env.NODE_ENV !== 'production'
+
+
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -15,16 +19,19 @@ async function createWindow() {
   const win = new BrowserWindow({
     width: 850,
     height: 650,
+    minWidth: 850,
+    minHeight: 650,
+    icon: path.join(__dirname, 'assets/logo2.png'),
     webPreferences: {
-
-      // Use pluginOptions.nodeIntegration, leave this alone
-      // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
-      contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION
+      contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION,
+      preload: path.join(__dirname, 'preload.js'),
     },
-    frame: false
+    frame: true,
+    transparent: true
   })
   win.setMenuBarVisibility(false)
+
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
@@ -36,6 +43,10 @@ async function createWindow() {
     win.loadURL('app://./index.html')
   }
 }
+
+
+// const os = require("os");
+// console.log(os)
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {

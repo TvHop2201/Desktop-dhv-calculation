@@ -4,6 +4,9 @@ import Router from 'vue-router'
 import App from '../App.vue'
 import Dashboard from '../components/Dashboard.vue'
 import Calculation from '../components/calculation/CalculationView.vue'
+import information from '../components/Information.vue'
+import Weather from '../components/Weather.vue'
+import Setting from '../components/Setting.vue'
 import NF404 from '../components/NF404.vue'
 
 
@@ -20,11 +23,15 @@ const router = new Router({
         },
         {
             path: '/weather',
-            component: Calculation
+            component: Weather
         },
         {
             path: '/information',
-            component: Calculation
+            component: information
+        },
+        {
+            path: '/setting',
+            component: Setting
         },
         {
             path: '*',
